@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">medical-equip</string>
+    <string name="medical_tool_name">Tool Name</string>
 </resources>
