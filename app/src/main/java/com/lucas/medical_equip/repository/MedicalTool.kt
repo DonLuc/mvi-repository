@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MedicalTool (
     @SerializedName("toolID")
-    val toolID: Int,
+    val toolID: String,
     @SerializedName("description")
     val description: String,
     @SerializedName("imageURL")
