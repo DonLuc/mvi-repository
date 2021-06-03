@@ -1,14 +1,15 @@
 package com.lucas.medical_equip
 
+import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.lucas.medical_equip.repository.MedicalTool
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -23,6 +24,7 @@ class MedicalToolAdapter(private var medicalTools: List<MedicalTool>) : Recycler
     inner class ViewHolder(medicalToolItemView: View) : RecyclerView.ViewHolder(medicalToolItemView) {
         val medicalToolImage = itemView.findViewById<ImageView>(R.id.medical_tool_image)
         val medicalToolDescription = itemView.findViewById<TextView>(R.id.medical_tool_text)
+        val isAvailable = itemView.findViewById<TextView>(R.id.medical_tool_avail)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,9 +46,22 @@ class MedicalToolAdapter(private var medicalTools: List<MedicalTool>) : Recycler
         //Set the items views based on your views data model
         val medicalToolImage = holder.medicalToolImage
         val medicalToolDescription = holder.medicalToolDescription
-        //medicalToolImage.setImageURI(Uri.parse(medicalTool.imageURL))
+        val isMedicalAvail = holder.isAvailable
+        holder.itemView.setOnClickListener{onItemClicked(medicalTool, holder.medicalToolImage)}
+
+        if(medicalTool.isAvailable) {
+            isMedicalAvail.setText("AVAILABLE")
+            isMedicalAvail.setTextColor(Color.GREEN)
+        } else {
+            isMedicalAvail.setText("NOT AVAILABLE")
+            isMedicalAvail.setTextColor(Color.RED)
+        }
         Picasso.get().load(medicalTool.imageURL).into(medicalToolImage)
         medicalToolDescription.setText(medicalTool.description)
+    }
+
+    private fun onItemClicked(medicalTool: MedicalTool, context: View) {
+        Snackbar.make(context, "Medical Tool: " + medicalTool.description, Snackbar.LENGTH_LONG).show()
     }
 
     override fun getFilter(): Filter {

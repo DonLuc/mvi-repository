@@ -10,4 +10,5 @@ interface APIService {
     @Headers("Content-Type: application/json")
     @GET("/api/mobiletools/tools")
     fun getMedicalEquipments(): Observable<List<MedicalTool>>
+
 }

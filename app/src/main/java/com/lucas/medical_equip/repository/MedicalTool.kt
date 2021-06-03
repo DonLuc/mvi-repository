@@ -8,5 +8,7 @@ data class MedicalTool (
     @SerializedName("description")
     val description: String,
     @SerializedName("imageURL")
-    val imageURL: String
+    val imageURL: String,
+    @SerializedName("isAvailable")
+    val isAvailable: Boolean
 )

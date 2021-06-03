@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
+import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,11 +28,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        progressBar = findViewById(R.id.progressBar1)
         getMedicalTools()
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        progressBar = findViewById(R.id.progresssBar11)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     fun getMedicalTools() {
-        //progressBar.
+        progressBar.visibility = View.VISIBLE
         val medTools = RetrofitBuilder.apiService.getMedicalEquipments()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,8 +72,10 @@ class MainActivity : AppCompatActivity() {
                     //Set the layout managet to position the item
                     medicalRecyclerView.layoutManager = LinearLayoutManager(this)
                     logger.debug { toolsResponse }
+                    progressBar.visibility = View.GONE
                 }, {error ->
                     logger.error { error }
+                    progressBar.visibility = View.GONE
                 })
     }
 }
